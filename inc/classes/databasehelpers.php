@@ -648,12 +648,34 @@ function get_client_ip() {
         return $results;
     }
 
+    function setDryPlantsTable($plantId, $dbh)
+    {
+        $stmt = $dbh->prepare("UPDATE plants SET finalDryWeightObtained = 'Y' WHERE id = ? LIMIT 1");
+        $stmt->execute(array($plantId));
+        $results = $stmt->rowCount();
+        return $results;
+    }    
+    
     function plantWasteRemoval($plantId, $userId, $wasteType, $wasteCenterId, $wasteWeight, $wasteVolume, $wasteMethod, $dbh)
     {
 		$stmt = $dbh->prepare("INSERT INTO wasteremoval (plantId, userId, wasteType, wasteCenterId, wasteWeight, wasteVolume, wasteMethod) VALUES (?, ?, ?, ?, ?, ?, ?)");
 	    $stmt->execute(array($plantId, $userId, $wasteType, $wasteCenterId, $wasteWeight, $wasteVolume, $wasteMethod));
 		$rows = $stmt->rowCount();
 		return $rows;
+}
+    function getPlantHarvestWetInfoOnePlant($plantId, $dbh)
+    {
+       $stmt = $dbh->prepare("SELECT plantId, userIdWet, wetWeightObtainedDate, wetWeightUntrimmedGrams, wetWeightTrimmedGrams, wetWeightUnusableTrimGrams, wetWeightSugarTrimGrams FROM finalweight WHERE plantId = ? LIMIT 1");
+       $stmt->execute(array($plantId));
+       $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       return $results;
+}
+    function getPlantHarvestAllInfoOnePlant($plantId, $dbh)
+    {
+       $stmt = $dbh->prepare("SELECT * FROM finalweight WHERE plantId = ? LIMIT 1");
+       $stmt->execute(array($plantId));
+       $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       return $results;
 }
 }
 ?>

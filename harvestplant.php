@@ -11,7 +11,7 @@ $postToProcess = trim($_GET["toProcess"]);
 $postProcessType = trim($_GET["processType"]);
 $now = date('Y-m-d H:i:s');
 
-var_dump($_GET);
+//var_dump($_GET);
 
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/inc/modules/header.php');

@@ -1,8 +1,8 @@
-groLog version 0.0.1 pre-alpha
+groLog version 0.0.2 pre-alpha
 ============
 By groLog Project 
 
-Last Public Update 29, November 2018
+Last Public Update 7, December 2018
 
 this is a basic grow logging system for horticulture and cultivation. this is not complete by any means but it can be used to simply track things when you need to go from a computer to a phone or a pad and back and forth. We can help you set up but it is mostly up to you
 you need a stack with php a html server and a sql server capatible with mysql. a lot of people use xampp for ease of use. it can be used on windows or linux without much hassle.
@@ -81,3 +81,6 @@ then "add plant"
 
 error "Notice: Undefined offset: 0 in C:\xampp\htdocs\plantinfo.php on line 89"
 will occur until your first plant photo is uploaded, this will be remedied with error catching later.
+
+
+NOTE you must give the uploads directory write access or it will not be able to save photosstill did not re orient photos yet. slow development the last few days

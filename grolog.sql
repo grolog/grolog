@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.6
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 07, 2018 at 06:24 PM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.9
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -19,6 +28,7 @@ USE `grolog`;
 -- Table structure for table `actionlog`
 --
 
+DROP TABLE IF EXISTS `actionlog`;
 CREATE TABLE IF NOT EXISTS `actionlog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(255) NOT NULL COMMENT 'ip address doing action',
@@ -26,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `actionlog` (
   `username` varchar(255) NOT NULL COMMENT 'user account',
   `action` varchar(255) NOT NULL COMMENT 'action taken',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='table logs all actions' AUTO_INCREMENT=395 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='table logs all actions' AUTO_INCREMENT=407 ;
 
 -- --------------------------------------------------------
 
@@ -34,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `actionlog` (
 -- Table structure for table `api`
 --
 
+DROP TABLE IF EXISTS `api`;
 CREATE TABLE IF NOT EXISTS `api` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(64) DEFAULT NULL,
@@ -50,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `api` (
 -- Table structure for table `banks`
 --
 
+DROP TABLE IF EXISTS `banks`;
 CREATE TABLE IF NOT EXISTS `banks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bankName` varchar(255) NOT NULL,
@@ -66,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `banks` (
 -- Table structure for table `breeder`
 --
 
+DROP TABLE IF EXISTS `breeder`;
 CREATE TABLE IF NOT EXISTS `breeder` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `breederName` varchar(255) NOT NULL,
@@ -82,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `breeder` (
 -- Table structure for table `caretakerid`
 --
 
+DROP TABLE IF EXISTS `caretakerid`;
 CREATE TABLE IF NOT EXISTS `caretakerid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(255) NOT NULL,
@@ -104,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `caretakerid` (
 -- Table structure for table `emailauth`
 --
 
+DROP TABLE IF EXISTS `emailauth`;
 CREATE TABLE IF NOT EXISTS `emailauth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
@@ -120,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `emailauth` (
 -- Table structure for table `feedings`
 --
 
+DROP TABLE IF EXISTS `feedings`;
 CREATE TABLE IF NOT EXISTS `feedings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `caretakerId` int(11) NOT NULL,
@@ -136,12 +152,13 @@ CREATE TABLE IF NOT EXISTS `feedings` (
 -- Table structure for table `finalweight`
 --
 
+DROP TABLE IF EXISTS `finalweight`;
 CREATE TABLE IF NOT EXISTS `finalweight` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plantId` int(11) NOT NULL,
   `userIdWet` int(11) DEFAULT NULL,
   `userIdDry` int(11) DEFAULT NULL,
-  `wetWeightObtainedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `wetWeightObtainedDate` timestamp NULL DEFAULT NULL,
   `wetWeightUntrimmedGrams` decimal(65,0) NOT NULL,
   `wetWeightTrimmedGrams` decimal(65,0) NOT NULL,
   `wetWeightUnusableTrimGrams` decimal(65,0) NOT NULL,
@@ -155,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `finalweight` (
   `willBeProcessed` varchar(255) NOT NULL DEFAULT 'N' COMMENT 'if it is being processed to hash or concentrate. if it is change N to Y',
   `processedType` int(255) DEFAULT NULL COMMENT 'type of processing to be done, NULL none, 1 buble hash, 2 shift, 3 oil, 4 budder, 5 sugar, 6 wax, 7 honey oil, 8 other',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -163,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `finalweight` (
 -- Table structure for table `growspace`
 --
 
+DROP TABLE IF EXISTS `growspace`;
 CREATE TABLE IF NOT EXISTS `growspace` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `roomName` varchar(255) NOT NULL,
@@ -178,6 +196,7 @@ CREATE TABLE IF NOT EXISTS `growspace` (
 -- Table structure for table `lighting`
 --
 
+DROP TABLE IF EXISTS `lighting`;
 CREATE TABLE IF NOT EXISTS `lighting` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lightType` varchar(255) NOT NULL COMMENT 'led, hps, mhs etc',
@@ -194,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `lighting` (
 -- Table structure for table `nutrientnaming`
 --
 
+DROP TABLE IF EXISTS `nutrientnaming`;
 CREATE TABLE IF NOT EXISTS `nutrientnaming` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nuteId` int(11) NOT NULL,
@@ -211,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `nutrientnaming` (
 -- Table structure for table `plantgrowth`
 --
 
+DROP TABLE IF EXISTS `plantgrowth`;
 CREATE TABLE IF NOT EXISTS `plantgrowth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plantId` int(11) NOT NULL,
@@ -230,6 +251,7 @@ CREATE TABLE IF NOT EXISTS `plantgrowth` (
 -- Table structure for table `plants`
 --
 
+DROP TABLE IF EXISTS `plants`;
 CREATE TABLE IF NOT EXISTS `plants` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `strainId` int(11) NOT NULL,
@@ -244,8 +266,9 @@ CREATE TABLE IF NOT EXISTS `plants` (
   `breeder` int(11) NOT NULL,
   `softDeleted` varchar(1) NOT NULL DEFAULT 'N' COMMENT 'Y or N, soft deletes a plant so it is nevere removed from the system even if deleted from the front end',
   `userIdHarvested` int(11) DEFAULT NULL,
+  `finalDryWeightObtained` varchar(1) NOT NULL DEFAULT 'N' COMMENT 'has the dry weight been entered? Y for yes N for no. will dicteate if dry or harvested comes up',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=119 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=120 ;
 
 -- --------------------------------------------------------
 
@@ -253,6 +276,7 @@ CREATE TABLE IF NOT EXISTS `plants` (
 -- Table structure for table `plantupdates`
 --
 
+DROP TABLE IF EXISTS `plantupdates`;
 CREATE TABLE IF NOT EXISTS `plantupdates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plantId` int(11) NOT NULL,
@@ -265,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `plantupdates` (
   `fileUploaded` varchar(255) DEFAULT NULL COMMENT 'the filename for the file upload',
   `softDeleted` varchar(1) DEFAULT 'N' COMMENT 'Y or N. If comment is deleted from view on the front end',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='comments and updates on the plants, ' AUTO_INCREMENT=79 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='comments and updates on the plants, ' AUTO_INCREMENT=123 ;
 
 -- --------------------------------------------------------
 
@@ -273,6 +297,7 @@ CREATE TABLE IF NOT EXISTS `plantupdates` (
 -- Table structure for table `strain`
 --
 
+DROP TABLE IF EXISTS `strain`;
 CREATE TABLE IF NOT EXISTS `strain` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `breederId` int(11) NOT NULL,
@@ -296,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `strain` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
@@ -320,6 +346,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `wasteremoval`
 --
 
+DROP TABLE IF EXISTS `wasteremoval`;
 CREATE TABLE IF NOT EXISTS `wasteremoval` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plantId` int(11) NOT NULL,

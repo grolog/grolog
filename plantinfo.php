@@ -57,7 +57,15 @@ else {
 
 
 
-
+<?php
+if ($plantImageResults[0]["photoUploaded"] == "Y" && $plantImageResults[0]["fileUploaded"] != NULL) {
+    $uploadedImageFile = "/uploads/plants/" . $plantImageResults[0]['fileUploaded'];
+    ?>
+    <img style="width:100%" src="<?php echo $uploadedImageFile; ?>">
+    <?php
+}
+//}
+?>
 
 
 				<?php
@@ -70,6 +78,142 @@ else {
                     }
                     if ($plants["harvested"] == "Y") {
                         echo "<h1>PLANT HAS BEEN HARVESTED>>>>>>>></h1>";
+                        echo "</br>";
+                        $wetWeightAll = $dbFcts->getPlantHarvestWetInfoOnePlant($postPId, $dbh);
+                        ?>
+                        <table>
+                        <tr>
+                        Wet Harvest
+                        </tr>
+                        <tr>
+                        <table border="1">
+                        <th>User</th><th>Harvest Date</th><th>Total Weight</th><th>Trimmed Weight</th><th>Unusable Trim Weight</th><th>Sugar Trim</th>
+                        <tr>
+                        <td>
+                        
+                        <?php
+                            $caretakerHarvestedWet = $dbFcts->getCaretakerNameFromId($wetWeightAll[0]["userIdWet"], $dbh);
+                            echo $caretakerHarvestedWet[0]["firstName"] . " " . $caretakerHarvestedWet[0]["lastName"] . " (" . $caretakerHarvestedWet[0]["id"] . ")";
+                        ?>
+                        
+                        </td>
+                        <td>
+                        
+                        <?php
+                            echo $wetWeightAll[0]["wetWeightObtainedDate"];
+                        ?>
+                        
+                        </td>
+                        <td>
+                        
+                        <?php
+                            echo $wetWeightAll[0]["wetWeightUntrimmedGrams"];
+                        ?>
+                        
+                        </td>
+                        <td>
+                        
+                        <?php
+                            echo $wetWeightAll[0]["wetWeightTrimmedGrams"];
+                            ?>
+                                                    
+                        </td>
+                        <td>
+                        <?php
+                            echo $wetWeightAll[0]["wetWeightUnusableTrimGrams"];
+                        ?>
+                        </td>
+                        <td>
+                        
+                        <?php
+                            echo $wetWeightAll[0]["wetWeightSugarTrimGrams"];
+                            ?>
+                        
+                        </td>
+                        
+                        
+                        </tr>
+                                                </tr>
+                        </table>
+                        <?php
+                           $allHarvestInfoPlant = $dbFcts->getPlantHarvestAllInfoOnePlant($postPId, $dbh);
+                            //var_dump($allHarvestInfoPlant);
+                        
+                        ?>
+                        <?php
+                                                if ($plants["finalDryWeightObtained"] == "Y") {
+
+                                                ?>
+                        <tr>
+                        Dry Harvest
+                        <table border="1">
+                        <th>User</th><th>Dry Date</th><th>Untrimmed Weight</th><th>Trimmed Weight</th><th>Dry Unusable Trim</th><th>Dry Sugartrim</th>
+                        </tr>
+                        <tr>
+                        <td>
+
+                        <?php
+                        $caretakerDry = $dbFcts->getCaretakerNameFromId($allHarvestInfoPlant[0]["userIdDry"], $dbh);
+                        echo $caretakerDry[0]["firstName"] . " " . $caretakerDry[0]["lastName"] . " (" . $caretakerDry[0]["id"] . ")";
+                        ?>
+                        
+                        
+                        </td>
+                        <td>
+                        
+                        <?php
+                        echo $allHarvestInfoPlant[0]["dryWeightObtainedDate"];
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                        echo $allHarvestInfoPlant[0]["dryWeightUntrimmedGrams"];
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                        echo $allHarvestInfoPlant[0]["dryWeightTrimmedGrams"];
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                        echo $allHarvestInfoPlant[0]["dryWeightUnusableTrimGrams"];
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                        echo $allHarvestInfoPlant[0]["dryWeightSugarTrimGrams"];
+                        ?>
+                                               
+                        </td>
+                        
+                        
+                        
+                        </tr>
+                        
+                        
+                        </table>
+                        </tr>
+                        
+                        </table>
+                        <?php
+                                                }
+                                                ?>
+  
+                        <?php
+
+                        
+                        echo "<br/>";
+                        echo "<br/>";
+                        echo "<br/>";
+                        
+                        if ($plants["finalDryWeightObtained"] == "N") {
+                        ?>
+                        <a href="harvestdryweight.php?plantId=<?php  echo $postPId;?>">Submit Dry Weights</a><?php
+                        }
+                        if ($plants["finalDryWeightObtained"] == "Y") {
+                            $plantHarvestWeight = $dbFcts->getPlantHarvestAllInfoOnePlant($postPId, $dbh);
+                        }
                     }
                     if ($plants["harvested"] != "Y") {
                         ?>
@@ -84,16 +228,7 @@ else {
                     
                     
                     
-<?php
-//var_dump($plantImageResults);
-if ($plantImageResults[0]["photoUploaded"] == "Y" && $plantImageResults[0]["fileUploaded"] != NULL) {
-    $uploadedImageFile = "/uploads/plants/" . $plantImageResults[0]['fileUploaded'];
-    ?>
-    <img style="width:100%" src="<?php echo $uploadedImageFile; ?>">
-    <?php
-}
-//}
-?>
+
                 
                 			<table>
 			<tr><td>
@@ -164,7 +299,6 @@ if ($plantImageResults[0]["photoUploaded"] == "Y" && $plantImageResults[0]["file
 
 						<td>
                         <?php
-                        //var_dump($strainName);
                                 $breeder = $dbFcts->getBreederFromPlantId($strainName[0]["breederId"], $dbh);
 								echo $breeder[0]["breederName"] . "/" . $breeder[0]["breederLocation"];							?>
 						</td>                        

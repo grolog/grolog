@@ -69,6 +69,12 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/inc/modules/header.php');
     <br/>
         <a href="addbank.php">Add Seed Bank</a>
   <br/>
+        <a href="addnutrientcompany.php">Add Nutrient Company</a>
+<br/>
+        <a href="addnutrient.php">Add Nutrient</a>
+        
+        <br/>
+  <br/>
                 			<table>
 			<tr><td>
 				Alive Plants
@@ -444,6 +450,219 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/inc/modules/header.php');
 				</table>
 
 				</td>
+                
+                
+                
+                
+                
+                
+                		<tr><td>
+            
+            
+            
+            
+				All Nutrient Companies
+                <table border="1">
+				<tr>
+					<th>Company Id</th><th>Company Name</th><th>Company Website</th><th>Location</th><th>Who Added</>
+				</tr>
+				<?php
+				/* parse through all actions so user sees what has happened */
+				$i = 0;
+				foreach ($allnutrientcompanies as $nutrientcompany){
+				?>
+				<tr>
+						<td>
+							<?php
+								echo $nutrientcompany["id"];
+						    ?>
+						</td>
+						<td>
+							<?php
+								echo $nutrientcompany["companyName"];
+							?>
+						</td>
+						<td>
+							<?php
+                                echo $nutrientcompany["companyWebsite"];
+                                ?>
+						</td>
+                        <td>
+                            <?php
+                                echo $nutrientcompany["companyLocation"];
+                                ?>
+                        </td>
+						<td>
+							<?php
+                                $caretaker = $dbFcts->getCaretakerNameFromId($nutrientcompany["userAdded"], $dbh);
+								echo $caretaker[0]["firstName"] . " " . $caretaker[0]["lastName"];
+							?>
+                            <?php
+                                echo ("(" . $nutrientcompany["userAdded"] . ")");
+                            ?>
+                        </td>
+
+                    </tr>	
+				<?php
+					$i++;
+					}
+				?>
+				</table>
+
+				</td>
+                
+                
+                
+                
+                
+                		<tr><td>
+            
+            
+            
+            
+				All Nutrients
+                <table border="1">
+				<tr>
+					<th>Producer</th>Company Website</th><th>Nutrient Name</th><th>Who Added</th><th>N</th><th>P</th><th>K</th><th>Ca</th><th>Mg</th><th>S</th><th>Fe</th><th>Mn</th><th>Mo</th><th>Azomite</th><th>Mycorrhizae</th><th>Consistency</th><th>Additional Info</th>
+				</tr>
+				<?php
+				/* parse through all actions so user sees what has happened */
+				$i = 0;
+				foreach ($allnutrients as $nutrients){
+				?>
+				<tr>
+
+						<td>
+							<?php
+                             $nutrientcompanyinfo = $dbFcts->getNutrientCompanyInfo($nutrients["nuteCompany"], $dbh);
+
+								echo $nutrientcompanyinfo[0]["companyName"];
+							?>
+						</td>
+						<td>
+							<?php
+                                echo $nutrients["nuteName"];
+                                ?>
+						</td>
+						<td>
+							<?php
+                                $caretaker = $dbFcts->getCaretakerNameFromId($nutrients["userId"], $dbh);
+								echo $caretaker[0]["firstName"] . " " . $caretaker[0]["lastName"];
+							?>
+                            <?php
+                                echo ("(" . $nutrientcompany["userAdded"] . ")");
+                            ?>
+                        </td>
+                        <td>
+							<?php
+                                echo $nutrients["nuteN"];
+                                ?>                        
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteP"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteK"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+                        
+							<?php
+                                echo $nutrients["nuteCa"];
+                                ?>
+                        </td>
+
+                        <td>
+                        
+							<?php
+                                echo $nutrients["nuteMg"];
+                                ?>                        
+                                </td>
+
+                        <td>
+                        
+							<?php
+                                echo $nutrients["nuteS"];
+                                ?>
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteFe"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteMn"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+                        
+							<?php
+                                echo $nutrients["nuteMo"];
+                                ?>
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteAzomite"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteMycorrhizae"];
+                                ?>
+                        
+                        </td>
+
+                        <td>
+							<?php
+                                $nuteCon = $nutrients["nuteConsistency"];
+                                if ($nuteCon == "S") {
+                                    echo "Solid";
+                                }
+                                if ($nuteCon == "L") {
+                                    echo "Liquid";
+                                }
+                                if ($nuteCon == "O") {
+                                    echo "Other";
+                                }
+                                    
+                                ?>
+                        
+                        </td>
+
+                        <td>
+							<?php
+                                echo $nutrients["nuteAdditional"];
+                                ?>                        
+                        </td>
+
+                    </tr>	
+				<?php
+					$i++;
+					}
+				?>
+				</table>
+
+				</td>               
+                
+                
+                
 				</table>
 
 

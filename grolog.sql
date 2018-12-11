@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2018 at 06:24 PM
+-- Generation Time: Dec 11, 2018 at 10:47 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `actionlog` (
   `username` varchar(255) NOT NULL COMMENT 'user account',
   `action` varchar(255) NOT NULL COMMENT 'action taken',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='table logs all actions' AUTO_INCREMENT=407 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='table logs all actions' AUTO_INCREMENT=416 ;
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `banks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bankName` varchar(255) NOT NULL,
   `bankLocation` varchar(2) NOT NULL DEFAULT 'ES',
-  `userAdded` int(11) NOT NULL DEFAULT '35',
+  `userAdded` int(11) NOT NULL,
   `bankWebsite` varchar(255) NOT NULL DEFAULT 'noaddre.ss',
   `softDeleted` varchar(1) NOT NULL DEFAULT 'N' COMMENT 'N or Y, so breeder wont be removed and error system this slot is here to be the place holder for removed lookups',
   PRIMARY KEY (`id`)
@@ -139,10 +139,9 @@ DROP TABLE IF EXISTS `feedings`;
 CREATE TABLE IF NOT EXISTS `feedings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `caretakerId` int(11) NOT NULL,
-  `seedId` int(11) NOT NULL,
   `plantId` int(11) NOT NULL,
   `feedingTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `feedingNuteIds` varchar(255) NOT NULL,
+  `feedingNuteId` int(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -210,20 +209,47 @@ CREATE TABLE IF NOT EXISTS `lighting` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nutrientcompanies`
+--
+
+DROP TABLE IF EXISTS `nutrientcompanies`;
+CREATE TABLE IF NOT EXISTS `nutrientcompanies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `companyName` varchar(255) DEFAULT NULL,
+  `companyLocation` varchar(2) DEFAULT 'US',
+  `userAdded` int(11) DEFAULT NULL,
+  `companyWebsite` varchar(255) NOT NULL DEFAULT 'noaddre.ss',
+  `softDeleted` varchar(1) NOT NULL DEFAULT 'N' COMMENT 'Y for yes N for no',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nutrientnaming`
 --
 
 DROP TABLE IF EXISTS `nutrientnaming`;
 CREATE TABLE IF NOT EXISTS `nutrientnaming` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nuteId` int(11) NOT NULL,
   `nuteName` varchar(255) NOT NULL,
-  `nuteN` int(11) NOT NULL,
-  `nuteP` int(11) NOT NULL,
-  `nuteK` int(11) NOT NULL,
-  `nuteAdditional` varchar(255) NOT NULL COMMENT 'if nute being used is calmag etc allows custom labeling or percentages',
+  `nuteCompany` varchar(255) DEFAULT 'other' COMMENT 'company who makes the nutrient. default is other',
+  `nuteN` float NOT NULL,
+  `nuteP` float NOT NULL,
+  `nuteK` float NOT NULL,
+  `nuteCa` float NOT NULL,
+  `nuteMg` float NOT NULL,
+  `nuteS` float NOT NULL,
+  `nuteFe` float NOT NULL,
+  `nuteMn` float NOT NULL,
+  `nuteMo` float NOT NULL,
+  `nuteAzomite` float NOT NULL DEFAULT '0',
+  `nuteMycorrhizae` float DEFAULT '0',
+  `nuteConsistency` varchar(1) NOT NULL DEFAULT 'L' COMMENT 'L for Liquid, S for solid, O for other (such as weird nutrients)',
+  `nuteAdditional` varchar(255) DEFAULT NULL COMMENT 'if nute being used is calmag etc allows custom labeling or percentages',
+  `userId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -289,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `plantupdates` (
   `fileUploaded` varchar(255) DEFAULT NULL COMMENT 'the filename for the file upload',
   `softDeleted` varchar(1) DEFAULT 'N' COMMENT 'Y or N. If comment is deleted from view on the front end',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='comments and updates on the plants, ' AUTO_INCREMENT=123 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='comments and updates on the plants, ' AUTO_INCREMENT=157 ;
 
 -- --------------------------------------------------------
 

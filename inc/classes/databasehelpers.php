@@ -677,5 +677,44 @@ function get_client_ip() {
        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
        return $results;
 }
+    function addNewNutrient($nuteCompany, $nuteName, $nuteN, $nuteP, $nuteK, $nuteCa, $nuteMg, $nuteS, $nuteFe, $nuteMn, $nuteMo, $nuteAzomite, $nuteMycorrhizae, $nuteConsistency, $nuteAdditional, $userId, $dbh)
+    {
+		$stmt = $dbh->prepare("INSERT INTO nutrientnaming (nuteCompany, nuteName, nuteN, nuteP, nuteK, nuteCa, nuteMg, nuteS, nuteFe, nuteMn, nuteMo, nuteAzomite, nuteMycorrhizae, nuteConsistency, nuteAdditional, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	    $stmt->execute(array($nuteCompany, $nuteName, $nuteN, $nuteP, $nuteK, $nuteCa, $nuteMg, $nuteS, $nuteFe, $nuteMn, $nuteMo, $nuteAzomite, $nuteMycorrhizae, $nuteConsistency, $nuteAdditional, $userId));
+		$rows = $stmt->rowCount();
+		return $rows;
+}
+
+
+
+    function addNutrientCompany($userId, $companyName, $country, $website, $dbh)
+   {
+		$stmt = $dbh->prepare("INSERT INTO nutrientcompanies (companyName, companyLocation, userAdded, companyWebsite) VALUES (?, ?, ?, ?)");
+	    $stmt->execute(array($companyName, $country, $userId, $website));
+		$rows = $stmt->rowCount();
+		return $rows;
+   }
+    function listNutrientCompanies($dbh)
+   {
+		$stmt = $dbh->prepare("SELECT * FROM nutrientcompanies ORDER BY companyName");
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+   }
+    function listAllNutrients($dbh)
+   {
+		$stmt = $dbh->prepare("SELECT * FROM nutrientnaming ORDER BY nuteName");
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+   }
+       function getNutrientCompanyInfo($nutrientCompanyId, $dbh)
+   {
+		$stmt = $dbh->prepare("SELECT * FROM nutrientcompanies WHERE id = ?");
+        $stmt->execute(array($nutrientCompanyId));
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+   }
+
 }
 ?>

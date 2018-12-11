@@ -28,7 +28,8 @@ checkLoggedIn (Page::INDEX);
  $allbreeders = $dbFcts->listBreeders($dbh);
  $allbanks = $dbFcts->getAllSeedBanks($dbh);
  $allstrains = $dbFcts->listStrains($dbh);
- 
+ $allnutrientcompanies = $dbFcts->listNutrientCompanies($dbh);
+ $allnutrients = $dbFcts->listAllNutrients($dbh);
  
  $caretakerName = $caretakerUserInfo[0]["firstName"] . " " . $caretakerUserInfo[0]["lastName"];
  
